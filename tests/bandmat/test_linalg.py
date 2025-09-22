@@ -12,6 +12,9 @@ import unittest
 import numpy as np
 import numpy.linalg as la
 import scipy.linalg as sla
+from numpy.random import randint, randn
+from test_core import gen_BandMat
+
 from nnmnkwii.paramgen import _bandmat as bm
 from nnmnkwii.paramgen._bandmat import full as fl
 from nnmnkwii.paramgen._bandmat import linalg as bla
@@ -19,8 +22,6 @@ from nnmnkwii.paramgen._bandmat.testhelp import (
     assert_allclose,
     randomize_extra_entries_bm,
 )
-from numpy.random import randint, randn
-from test_core import gen_BandMat
 
 
 def rand_bool():
@@ -139,7 +140,7 @@ class TestLinAlg(unittest.TestCase):
             except la.LinAlgError as e:
                 # First part of the message is e.g. "2-th leading minor".
                 msgRe = r"^" + re.escape(str(e)[:15]) + r".*not positive definite$"
-                with self.assertRaisesRegexp(la.LinAlgError, msgRe):
+                with self.assertRaisesRegex(la.LinAlgError, msgRe):
                     sla.cholesky(mat_bm.full(), lower=lower)
             else:
                 assert np.shape(chol_data) == (depth + 1, size)
@@ -180,7 +181,7 @@ class TestLinAlg(unittest.TestCase):
             if badFrame is not None:
                 msg = "singular matrix: resolution failed at diagonal %d" % badFrame
                 msgRe = "^" + re.escape(msg) + "$"
-                with self.assertRaisesRegexp(la.LinAlgError, msgRe):
+                with self.assertRaisesRegex(la.LinAlgError, msgRe):
                     bla._solve_triangular_banded(
                         chol_data,
                         b_arg,
@@ -188,7 +189,7 @@ class TestLinAlg(unittest.TestCase):
                         lower=lower,
                         overwrite_b=overwrite_b,
                     )
-                with self.assertRaisesRegexp(la.LinAlgError, msgRe):
+                with self.assertRaisesRegex(la.LinAlgError, msgRe):
                     sla.solve_triangular(chol_full, b, trans=transposed, lower=lower)
             else:
                 x = bla._solve_triangular_banded(
