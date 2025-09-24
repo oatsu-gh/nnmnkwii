@@ -3,7 +3,6 @@ from importlib import resources
 from os.path import join
 
 import numpy as np
-
 from nnmnkwii.datasets import FileDataSource
 
 
