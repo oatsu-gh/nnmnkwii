@@ -29,7 +29,9 @@ def example_label_file(*, phone_level: bool = False) -> str:
     """
     name = "arctic_a0009"
     suffix = "phone" if phone_level else "state"
-    label_path = resources.files(__name__) / "_example_data" / f"{name}_{suffix}.lab"
+    label_path = (
+        resources.files("nnmnkwii.util") / "_example_data" / f"{name}_{suffix}.lab"
+    )
     return str(label_path)
 
 
@@ -48,7 +50,7 @@ def example_audio_file() -> str:
         >>> fs, x = wavfile.read(example_audio_file())
     """
     name = "arctic_a0009"
-    wav_path = resources.files(__name__) / "_example_data" / f"{name}.wav"
+    wav_path = resources.files("nnmnkwii.util") / "_example_data" / f"{name}.wav"
     return str(wav_path)
 
 
@@ -68,7 +70,7 @@ def example_question_file() -> str:
         >>> binary_dict, numeric_dict = hts.load_question_set(example_question_file())
     """
     name = "questions-radio_dnn_416"
-    hed_path = resources.files(__name__) / "_example_data" / f"{name}.hed"
+    hed_path = resources.files("nnmnkwii.util") / "_example_data" / f"{name}.hed"
     return str(hed_path)
 
 
@@ -85,7 +87,7 @@ class BinaryFileDataSource(FileDataSource):
 
 class ExampleSLTArcticFileDataSource(BinaryFileDataSource):
     SLT_DEMO_DATA_ROOT = (
-        resources.files(__name__) / "_example_data" / "slt_arctic_demo_data"
+        resources.files("nnmnkwii.util") / "_example_data" / "slt_arctic_demo_data"
     )
 
     mgc_dim = 75
